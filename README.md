@@ -2,7 +2,7 @@
 
 ## Objective
 
-Create an application that given a integer number greater than 1, prints the respective Pascal Triangle in console.
+Create a single application that prints a Pascal Triangle in console given an initial level number. 
  
 For example:
 
@@ -128,6 +128,7 @@ Pascal Triangle of level 16 is:
 ## Preconditions and restrictions
 
 1. Your solution should provide all acceptance tests and Unit Tests.
-2. Consider the possibility to print in different outputs like a File or another output.
-3. Consider the possibility to print using different formats like single triangle (without "/" and "\" symbols), single lines and html, xml, json formats.
+2. Prepare your code to print in different outputs like a File
+3. Consider the possibility to print using different formats like single triangle (without "/" and "\" symbols), 
+   single lines and html, xml, json formats.
  
