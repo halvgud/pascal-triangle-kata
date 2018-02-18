@@ -28,4 +28,8 @@ public class PascalTriangleNode {
 	public int hashCode() {
 		return Objects.hash(value);
 	}
+
+	public String value() {
+		return String.valueOf(this.value);
+	}
 }

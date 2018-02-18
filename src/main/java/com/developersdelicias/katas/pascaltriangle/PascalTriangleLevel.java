@@ -1,6 +1,7 @@
 package com.developersdelicias.katas.pascaltriangle;
 
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Objects;
 
 class PascalTriangleLevel {
@@ -28,5 +29,9 @@ class PascalTriangleLevel {
 	@Override
 	public int hashCode() {
 		return Objects.hash(nodes);
+	}
+
+	public Iterator<PascalTriangleNode> iterator() {
+		return nodes.iterator();
 	}
 }

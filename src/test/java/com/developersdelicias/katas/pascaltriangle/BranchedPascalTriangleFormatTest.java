@@ -4,11 +4,28 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 
 public class BranchedPascalTriangleFormatTest {
+	public static final PascalTriangleLevel LEVEL_1 = new PascalTriangleLevel(
+			asList(new PascalTriangleNode(1))
+	);
+	public static final PascalTriangleLevel LEVEL_2 = new PascalTriangleLevel(
+			asList(
+					new PascalTriangleNode(1),
+					new PascalTriangleNode(1)
+			)
+	);
+	public static final PascalTriangleLevel LEVEL_3 = new PascalTriangleLevel(
+			asList(
+					new PascalTriangleNode(1),
+					new PascalTriangleNode(2),
+					new PascalTriangleNode(1)
+			)
+	);
 	private BranchedPascalTriangleFormat format;
 	private PascalTriangle triangle;
 
@@ -45,7 +62,8 @@ public class BranchedPascalTriangleFormatTest {
 
 	@Test
 	public void can_format_triangles_of_level_three() {
-		given(triangle.level()).willReturn(3);
+		triangle = Mockito.spy(new PascalTriangle(3));
+		given(triangle.iterator()).willReturn(asList(LEVEL_1, LEVEL_2, LEVEL_3).iterator());
 
 		assertThat(
 				"Cannot format triangles of level three",
