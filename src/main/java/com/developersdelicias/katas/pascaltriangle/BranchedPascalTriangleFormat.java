@@ -4,19 +4,23 @@ import java.util.Iterator;
 
 class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
-	private static final String NEW_LINE = "\n";
 	private static final String BRANCH_CONNECTOR = "/ \\";
 	private static final RepeatedString BLANK = new RepeatedString(" ");
 	private static final RepeatedString BRANCH_CONNECTOR_WITH_BLANK = new RepeatedString(BRANCH_CONNECTOR + BLANK.times(1));
-	private static final String EMPTY_STRING = "";
 
 	@Override
 	public String format(PascalTriangle triangle) {
 
 		if (triangle.level() == 2) {
-			return BLANK.times(2) + "1" + NEW_LINE +
-					BLANK.times(1) + BRANCH_CONNECTOR + NEW_LINE +
-					EMPTY_STRING + "1" + BLANK.times(3) + "1";
+			Iterator<PascalTriangleLevel> iterator = triangle.iterator();
+			PascalTriangleLevel level1 = iterator.next();
+			PascalTriangleLevel level2 = iterator.next();
+			Iterator<PascalTriangleNode> level1NodeIterator = level1.iterator();
+			Iterator<PascalTriangleNode> level2NodeIterator = level2.iterator();
+			MultipleLineString output = new MultipleLineString(createValueLine(2, level1NodeIterator))
+					.appendLine(nodeConnector(1, 0))
+					.appendLine(createValueLine(0, level2NodeIterator));
+			return output.toString();
 		}
 
 		if (triangle.level() == 3) {
@@ -28,11 +32,12 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 			Iterator<PascalTriangleNode> level1NodeIterator = level1.iterator();
 			Iterator<PascalTriangleNode> level2NodeIterator = level2.iterator();
 			Iterator<PascalTriangleNode> level3NodeIterator = level3.iterator();
-			return BLANK.times(4) + level1NodeIterator.next().value() + NEW_LINE +
-					BLANK.times(3) + BRANCH_CONNECTOR + NEW_LINE +
-					BLANK.times(2) + level2NodeIterator.next().value() + BLANK.times(3) + level2NodeIterator.next().value() + NEW_LINE +
-					BLANK.times(1) + BRANCH_CONNECTOR + BLANK.times(1) + BRANCH_CONNECTOR + NEW_LINE +
-					level3NodeIterator.next().value() + BLANK.times(3) + level3NodeIterator.next().value() + BLANK.times(3) + level3NodeIterator.next().value();
+			MultipleLineString output = new MultipleLineString(createValueLine(4, level1NodeIterator))
+					.appendLine(nodeConnector(3, 0))
+					.appendLine(createValueLine(2, level2NodeIterator))
+					.appendLine(nodeConnector(1, 1))
+					.appendLine(createValueLine(0, level3NodeIterator));
+			return output.toString();
 		}
 		if (triangle.level() == 4) {
 			Iterator<PascalTriangleLevel> iterator = triangle.iterator();

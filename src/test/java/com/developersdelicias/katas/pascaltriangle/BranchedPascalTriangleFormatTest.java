@@ -48,7 +48,8 @@ public class BranchedPascalTriangleFormatTest {
 
 	@Test
 	public void can_format_triangles_of_level_one() {
-		given(triangle.level()).willReturn(1);
+		triangle = Mockito.spy(new PascalTriangle(1));
+		given(triangle.iterator()).willReturn(asList(LEVEL_1).iterator());
 
 		assertThat(
 				"Cannot format triangles of level one",
@@ -59,7 +60,8 @@ public class BranchedPascalTriangleFormatTest {
 
 	@Test
 	public void can_format_triangles_of_level_two() {
-		given(triangle.level()).willReturn(2);
+		triangle = Mockito.spy(new PascalTriangle(2));
+		given(triangle.iterator()).willReturn(asList(LEVEL_1, LEVEL_2).iterator());
 
 		assertThat(
 				"Cannot format triangles of level two",
