@@ -45,15 +45,30 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 			Iterator<PascalTriangleNode> level2NodeIterator = level2.iterator();
 			Iterator<PascalTriangleNode> level3NodeIterator = level3.iterator();
 			Iterator<PascalTriangleNode> level4NodeIterator = level4.iterator();
-			return BLANK.times(6) + level1NodeIterator.next().value() + NEW_LINE +
-					BLANK.times(5) + BRANCH_CONNECTOR_WITH_BLANK.times(0) + BRANCH_CONNECTOR + NEW_LINE +
-					BLANK.times(4) + level2NodeIterator.next().value() + BLANK.times(3) + level2NodeIterator.next().value() + NEW_LINE +
-					BLANK.times(3) + BRANCH_CONNECTOR_WITH_BLANK.times(1) + BRANCH_CONNECTOR + NEW_LINE +
-					BLANK.times(2) + level3NodeIterator.next().value() + BLANK.times(3) + level3NodeIterator.next().value() + BLANK.times(3) + level3NodeIterator.next().value() + NEW_LINE +
-					BLANK.times(1) + BRANCH_CONNECTOR_WITH_BLANK.times(2) + BRANCH_CONNECTOR + NEW_LINE +
-					BLANK.times(0) + level4NodeIterator.next().value() + BLANK.times(3) + level4NodeIterator.next().value() + BLANK.times(3) + level4NodeIterator.next().value() + BLANK.times(3) + level4NodeIterator.next().value();
+			MultipleLineString output = new MultipleLineString(createValueLine(6, level1NodeIterator))
+					.appendLine(nodeConnector(5, 0))
+					.appendLine(createValueLine(4, level2NodeIterator))
+					.appendLine(nodeConnector(3, 1))
+					.appendLine(createValueLine(2, level3NodeIterator))
+					.appendLine(nodeConnector(1, 2))
+					.appendLine(createValueLine(0, level4NodeIterator));
+			return output.toString();
 		}
 
 		return "1";
+	}
+
+	private String nodeConnector(int leftMargin, int additionalConnectors) {
+		return BLANK.times(leftMargin) + BRANCH_CONNECTOR_WITH_BLANK.times(additionalConnectors) + BRANCH_CONNECTOR;
+	}
+
+	private String createValueLine(int leftMargin, Iterator<PascalTriangleNode> iterator) {
+		StringBuilder line = new StringBuilder(BLANK.times(leftMargin));
+		while (iterator.hasNext()) {
+			line.append(iterator.next().value());
+			if (iterator.hasNext())
+				line.append(BLANK.times(3));
+		}
+		return line.toString();
 	}
 }
