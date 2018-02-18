@@ -10,54 +10,27 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
 	@Override
 	public String format(PascalTriangle triangle) {
-
-		if (triangle.level() == 2) {
+		if (triangle.level() >= 1) {
 			Iterator<PascalTriangleLevel> iterator = triangle.iterator();
-			PascalTriangleLevel level1 = iterator.next();
-			PascalTriangleLevel level2 = iterator.next();
-			Iterator<PascalTriangleNode> level1NodeIterator = level1.iterator();
-			Iterator<PascalTriangleNode> level2NodeIterator = level2.iterator();
-			MultipleLineString output = new MultipleLineString(createValueLine(2, level1NodeIterator))
-					.appendLine(nodeConnector(1, 0))
-					.appendLine(createValueLine(0, level2NodeIterator));
-			return output.toString();
-		}
+			MultipleLineString outputs = null;
+			int actualLevelCount = 1;
+			int leftMargin = (triangle.level() - 1) * 2;
+			int additionalConnectors = 0;
+			while (iterator.hasNext()) {
+				PascalTriangleLevel currentLevel = iterator.next();
+				String valueLine = createValueLine(leftMargin--, currentLevel.iterator());
+				if (outputs == null)
+					outputs = new MultipleLineString(valueLine);
+				else
+					outputs.appendLine(valueLine);
 
-		if (triangle.level() == 3) {
-			Iterator<PascalTriangleLevel> iterator = triangle.iterator();
-			PascalTriangleLevel level1 = iterator.next();
-			PascalTriangleLevel level2 = iterator.next();
-			PascalTriangleLevel level3 = iterator.next();
+				if (triangle.level() > 1 && actualLevelCount < triangle.level()) {
+					outputs.appendLine(nodeConnector(leftMargin--, additionalConnectors++));
+				}
+				actualLevelCount++;
+			}
 
-			Iterator<PascalTriangleNode> level1NodeIterator = level1.iterator();
-			Iterator<PascalTriangleNode> level2NodeIterator = level2.iterator();
-			Iterator<PascalTriangleNode> level3NodeIterator = level3.iterator();
-			MultipleLineString output = new MultipleLineString(createValueLine(4, level1NodeIterator))
-					.appendLine(nodeConnector(3, 0))
-					.appendLine(createValueLine(2, level2NodeIterator))
-					.appendLine(nodeConnector(1, 1))
-					.appendLine(createValueLine(0, level3NodeIterator));
-			return output.toString();
-		}
-		if (triangle.level() == 4) {
-			Iterator<PascalTriangleLevel> iterator = triangle.iterator();
-			PascalTriangleLevel level1 = iterator.next();
-			PascalTriangleLevel level2 = iterator.next();
-			PascalTriangleLevel level3 = iterator.next();
-			PascalTriangleLevel level4 = iterator.next();
-
-			Iterator<PascalTriangleNode> level1NodeIterator = level1.iterator();
-			Iterator<PascalTriangleNode> level2NodeIterator = level2.iterator();
-			Iterator<PascalTriangleNode> level3NodeIterator = level3.iterator();
-			Iterator<PascalTriangleNode> level4NodeIterator = level4.iterator();
-			MultipleLineString output = new MultipleLineString(createValueLine(6, level1NodeIterator))
-					.appendLine(nodeConnector(5, 0))
-					.appendLine(createValueLine(4, level2NodeIterator))
-					.appendLine(nodeConnector(3, 1))
-					.appendLine(createValueLine(2, level3NodeIterator))
-					.appendLine(nodeConnector(1, 2))
-					.appendLine(createValueLine(0, level4NodeIterator));
-			return output.toString();
+			return outputs.toString();
 		}
 
 		return "1";
