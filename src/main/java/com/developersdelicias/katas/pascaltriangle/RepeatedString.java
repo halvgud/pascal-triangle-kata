@@ -10,6 +10,6 @@ public class RepeatedString {
 	}
 
 	public String times(int times) {
-		return String.join("", Collections.nCopies(times, baseString));
+		return String.join("", Collections.nCopies(times > 0 ? times : 0, baseString));
 	}
 }

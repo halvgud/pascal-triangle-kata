@@ -81,7 +81,7 @@ public class AcceptanceTest {
 	}
 
 	@Test
-	@Ignore
+//	@Ignore
 	public void triangle_of_14() {
 		format = new BranchedPascalTriangleFormat();
 		printPascalTriangleOfLevel(14);
