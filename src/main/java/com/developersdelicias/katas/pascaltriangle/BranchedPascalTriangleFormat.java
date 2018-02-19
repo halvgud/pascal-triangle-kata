@@ -48,8 +48,8 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 	}
 
 	private String nodeConnector(int leftMargin, int additionalConnectors) {
-		String connector = createConnectorSymbol();
 		resetAdditionalMargin();
+		String connector = createConnectorSymbol();
 		return BLANK.times(leftMargin + additionalMargin)
 				+ new RepeatedString(connector + BLANK.times(1)).times(additionalConnectors)
 				+ connector;
@@ -71,8 +71,7 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
 	private String createValueLine(Iterator<PascalTriangleNode> iterator) {
 		resetAdditionalMargin();
-		StringBuilder line = new StringBuilder(BLANK.times((leftMargin--) + (additionalMargin--)));
-
+		StringBuilder line = createMargin();
 		String previousValue = "";
 		if (iterator.hasNext()) {
 			previousValue = iterator.next().value();
@@ -80,49 +79,62 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 		}
 		while (iterator.hasNext()) {
 			String value = iterator.next().value();
-			if (triangleLevel >= 14) {
-				if (previousValue.length() == 1 && value.length() == 1) {
-					line.append(BLANK.times(5));
-				} else if (previousValue.length() == 1 && value.length() == 2) {
-					line.append(BLANK.times(4));
-				} else if (previousValue.length() == 2 && value.length() == 2) {
-					line.append(BLANK.times(4));
-				} else if (previousValue.length() == 2 && value.length() == 3) {
-					line.append(BLANK.times(3));
-				} else if (previousValue.length() == 3 && value.length() == 3) {
-					line.append(BLANK.times(3));
-				} else if (previousValue.length() == 3 && value.length() == 2) {
-					line.append(BLANK.times(4));
-				} else if (previousValue.length() == 3 && value.length() == 4) {
-					line.append(BLANK.times(2));
-				} else if (previousValue.length() == 4 && value.length() == 3) {
-					line.append(BLANK.times(3));
-				} else if (previousValue.length() == 4 && value.length() == 4) {
-					line.append(BLANK.times(2));
-				} else if (previousValue.length() == 4 && value.length() == 5) {
-					line.append(BLANK.times(1));
-				} else if (previousValue.length() == 5 && value.length() == 5) {
-					line.append(BLANK.times(1));
-				} else if (previousValue.length() == 5 && value.length() == 4) {
-					line.append(BLANK.times(2));
-				} else {
-					line.append(BLANK.times(5));
-				}
-			} else {
-				if (previousValue.length() == 2 && value.length() == 3) {
-					line.append(BLANK.times(2));
-				} else if (previousValue.length() == 3 && value.length() == 3) {
-					line.append(BLANK.times(1));
-				} else if (previousValue.length() == 3 && value.length() == 2) {
-					line.append(BLANK.times(1));
-				} else {
-					line.append(BLANK.times(value.length() == 2 ? 2 : 3));
-				}
-			}
-
+			line.append(valueSeparator(previousValue, value));
 			line.append(value);
 			previousValue = value;
 		}
 		return line.toString();
+	}
+
+	private String valueSeparator(String previousValue, String value) {
+		return BLANK.times(between(previousValue, value));
+	}
+
+	private int between(String previousValue, String value) {
+		int spacesBetweenValues;
+		if (triangleLevel >= 14) {
+			if (previousValue.length() == 1 && value.length() == 1) {
+				spacesBetweenValues = 5;
+			} else if (previousValue.length() == 1 && value.length() == 2) {
+				spacesBetweenValues = 4;
+			} else if (previousValue.length() == 2 && value.length() == 2) {
+				spacesBetweenValues = 4;
+			} else if (previousValue.length() == 2 && value.length() == 3) {
+				spacesBetweenValues = 3;
+			} else if (previousValue.length() == 3 && value.length() == 3) {
+				spacesBetweenValues = 3;
+			} else if (previousValue.length() == 3 && value.length() == 2) {
+				spacesBetweenValues = 4;
+			} else if (previousValue.length() == 3 && value.length() == 4) {
+				spacesBetweenValues = 2;
+			} else if (previousValue.length() == 4 && value.length() == 3) {
+				spacesBetweenValues = 3;
+			} else if (previousValue.length() == 4 && value.length() == 4) {
+				spacesBetweenValues = 2;
+			} else if (previousValue.length() == 4 && value.length() == 5) {
+				spacesBetweenValues = 1;
+			} else if (previousValue.length() == 5 && value.length() == 5) {
+				spacesBetweenValues = 1;
+			} else if (previousValue.length() == 5 && value.length() == 4) {
+				spacesBetweenValues = 2;
+			} else {
+				spacesBetweenValues = 5;
+			}
+		} else {
+			if (previousValue.length() == 2 && value.length() == 3) {
+				spacesBetweenValues = 2;
+			} else if (previousValue.length() == 3 && value.length() == 3) {
+				spacesBetweenValues = 1;
+			} else if (previousValue.length() == 3 && value.length() == 2) {
+				spacesBetweenValues = 1;
+			} else {
+				spacesBetweenValues = value.length() == 2 ? 2 : 3;
+			}
+		}
+		return spacesBetweenValues;
+	}
+
+	private StringBuilder createMargin() {
+		return new StringBuilder(BLANK.times((leftMargin--) + (additionalMargin--)));
 	}
 }
