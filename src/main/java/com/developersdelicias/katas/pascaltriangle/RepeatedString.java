@@ -10,7 +10,7 @@ public class RepeatedString {
 	}
 
 	public String times(int times) {
-		if (times <= 0)
+		if (times < 1)
 			return "";
 		return String.join("", Collections.nCopies(times, baseString));
 	}

@@ -49,7 +49,7 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 	}
 
 	private boolean shouldAppendConnector() {
-		return triangleLevel > 1 && actualLevelCount < triangleLevel;
+		return actualLevelCount < triangleLevel;
 	}
 
 	private String nodeConnector() {

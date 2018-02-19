@@ -18,5 +18,25 @@ public class RepeatedStringTests {
 				new RepeatedString("a").times(3),
 				Is.is("aaa")
 		);
+		assertThat(
+				new RepeatedString("a").times(1),
+				Is.is("a")
+		);
+	}
+
+	@Test
+	public void can_determine_repeated_strings_for_zero_times() {
+		assertThat(
+				new RepeatedString("a").times(0),
+				Is.is("")
+		);
+	}
+
+	@Test
+	public void can_determine_repeated_strings_for_negative_times() {
+		assertThat(
+				new RepeatedString("a").times(-1),
+				Is.is("")
+		);
 	}
 }
