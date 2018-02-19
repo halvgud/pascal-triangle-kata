@@ -15,7 +15,7 @@ public class SinglePascalTriangleFormatTest {
 	public void formats_using_new_lines() {
 		SinglePascalTriangleFormat format = new SinglePascalTriangleFormat();
 		PascalTriangle triangle = spy(new PascalTriangle(4));
-		given(triangle.iterator()).willReturn(
+		given(triangle.levels()).willReturn(
 				asList(
 						new PascalTriangleLevel(Collections.singletonList(node(1))),
 						new PascalTriangleLevel(asList(node(2), node(2))),

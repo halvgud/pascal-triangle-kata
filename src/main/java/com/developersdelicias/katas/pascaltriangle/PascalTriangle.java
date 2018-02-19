@@ -54,7 +54,7 @@ class PascalTriangle {
 		return this.level;
 	}
 
-	public Iterator<PascalTriangleLevel> iterator() {
+	public Iterator<PascalTriangleLevel> levels() {
 		return new PascalTriangleLevelIterator(this);
 	}
 

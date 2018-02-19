@@ -158,7 +158,7 @@ public class PascalTriangleTest {
 	}
 
 	private Iterator<PascalTriangleLevel> iteratorOf(int level) {
-		return new PascalTriangle(level).iterator();
+		return new PascalTriangle(level).levels();
 	}
 
 	private static PascalTriangleLevel aLevelWith(Collection<PascalTriangleNode> nodes) {

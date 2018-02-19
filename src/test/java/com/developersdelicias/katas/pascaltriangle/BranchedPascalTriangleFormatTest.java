@@ -163,6 +163,6 @@ public class BranchedPascalTriangleFormatTest {
 
 	private void configureIteratorWithLevels(PascalTriangleLevel... levels) {
 		triangle = Mockito.spy(new PascalTriangle(levels.length));
-		given(triangle.iterator()).willReturn(asList(levels).iterator());
+		given(triangle.levels()).willReturn(asList(levels).iterator());
 	}
 }

@@ -8,9 +8,18 @@ public class MultipleLineString {
 		this.sb = new StringBuilder(string);
 	}
 
+	MultipleLineString() {
+		this("");
+	}
+
 	public MultipleLineString appendLine(String newLine) {
-		sb.append("\n").append(newLine);
+		sb.append(newLineCharIfRequired())
+				.append(newLine);
 		return this;
+	}
+
+	private String newLineCharIfRequired() {
+		return sb.toString().isEmpty() ? "" : "\n";
 	}
 
 	@Override

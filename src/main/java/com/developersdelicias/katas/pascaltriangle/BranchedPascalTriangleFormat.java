@@ -4,41 +4,44 @@ import java.util.Iterator;
 
 class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
-	private static final String BRANCH_CONNECTOR = "/ \\";
 	private static final RepeatedString BLANK = new RepeatedString(" ");
-	private static final RepeatedString BRANCH_CONNECTOR_WITH_BLANK = new RepeatedString("/ \\" + BLANK.times(1));
 	private int triangleLevel = 0;
 	private int additionalMargin = 0;
+	private int actualLevelCount;
+	private int leftMargin;
+	private int additionalConnectors;
 
 	@Override
 	public String format(PascalTriangle triangle) {
-		Iterator<PascalTriangleLevel> iterator = triangle.iterator();
-		MultipleLineString outputs = null;
+		initialize(triangle);
+		return createOutput(triangle).toString();
+	}
+
+	private void initialize(PascalTriangle triangle) {
 		this.triangleLevel = triangle.level();
-		int actualLevelCount = 1;
-		int leftMargin = (triangle.level() - 1) * 2;
+		actualLevelCount = 1;
+		leftMargin = (triangleLevel - 1) * 2;
 		additionalMargin = triangleLevel >= 14 ? 13 : 0;
+		additionalConnectors = 0;
 
 		if (triangleLevel >= 17) {
 			additionalMargin += 3;
 		}
+	}
 
-		int additionalConnectors = 0;
-		while (iterator.hasNext()) {
-			PascalTriangleLevel currentLevel = iterator.next();
+	private MultipleLineString createOutput(PascalTriangle triangle) {
+		Iterator<PascalTriangleLevel> triangleLevels = triangle.levels();
+		MultipleLineString outputs = new MultipleLineString();
+		while (triangleLevels.hasNext()) {
+			PascalTriangleLevel currentLevel = triangleLevels.next();
+			outputs.appendLine(createValueLine(currentLevel.nodes()));
 
-			String valueLine = createValueLine(leftMargin--, currentLevel.iterator());
-			if (outputs == null)
-				outputs = new MultipleLineString(valueLine);
-			else
-				outputs.appendLine(valueLine);
-
-			if (triangle.level() > 1 && actualLevelCount < triangle.level()) {
+			if (triangleLevel > 1 && actualLevelCount < triangleLevel) {
 				outputs.appendLine(nodeConnector(leftMargin--, additionalConnectors++));
 			}
 			actualLevelCount++;
 		}
-		return outputs == null ? "" : outputs.toString();
+		return outputs;
 	}
 
 	private String nodeConnector(int leftMargin, int additionalConnectors) {
@@ -58,11 +61,11 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 				+ branchSymbol;
 	}
 
-	private String createValueLine(int leftMargin, Iterator<PascalTriangleNode> iterator) {
+	private String createValueLine(Iterator<PascalTriangleNode> iterator) {
 		if (additionalMargin < 0) {
 			additionalMargin = 0;
 		}
-		StringBuilder line = new StringBuilder(BLANK.times(leftMargin + (additionalMargin--)));
+		StringBuilder line = new StringBuilder(BLANK.times((leftMargin--) + (additionalMargin--)));
 
 		String previousValue = "";
 		if (iterator.hasNext()) {

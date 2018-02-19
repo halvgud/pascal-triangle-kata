@@ -6,12 +6,12 @@ public class SinglePascalTriangleFormat implements PascalTriangleFormat {
 
 	@Override
 	public String format(PascalTriangle triangle) {
-		Iterator<PascalTriangleLevel> iterator = triangle.iterator();
+		Iterator<PascalTriangleLevel> iterator = triangle.levels();
 		if (iterator.hasNext()) {
 			MultipleLineString output = null;
 			while (iterator.hasNext()) {
 				PascalTriangleLevel currentLevel = iterator.next();
-				Iterator<PascalTriangleNode> nodeIterator = currentLevel.iterator();
+				Iterator<PascalTriangleNode> nodeIterator = currentLevel.nodes();
 				StringBuilder line = new StringBuilder();
 				while (nodeIterator.hasNext()) {
 					line.append(nodeIterator.next().value());

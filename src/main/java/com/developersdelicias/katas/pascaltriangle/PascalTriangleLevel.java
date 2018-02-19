@@ -31,7 +31,7 @@ class PascalTriangleLevel {
 		return Objects.hash(nodes);
 	}
 
-	public Iterator<PascalTriangleNode> iterator() {
+	public Iterator<PascalTriangleNode> nodes() {
 		return nodes.iterator();
 	}
 }
