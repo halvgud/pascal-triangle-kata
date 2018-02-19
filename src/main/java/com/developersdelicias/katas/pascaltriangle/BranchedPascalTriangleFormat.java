@@ -38,13 +38,26 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 	private String createValueLine(int leftMargin, Iterator<PascalTriangleNode> iterator) {
 		StringBuilder line = new StringBuilder(BLANK.times(leftMargin));
 
+		String previousValue = "";
 		if (iterator.hasNext()) {
-			line.append(iterator.next().value());
+			previousValue = iterator.next().value();
+			line.append(previousValue);
 		}
 		while (iterator.hasNext()) {
 			String value = iterator.next().value();
-			line.append(BLANK.times(value.length() == 2 ? 2 : 3));
+			if (previousValue.length() == 2 && value.length() == 3) {
+				line.append(BLANK.times(2));
+			} else if (previousValue.length() == 3 && value.length() == 3) {
+				line.append(BLANK.times(1));
+			}
+			else if (previousValue.length() == 3 && value.length() == 2) {
+				line.append(BLANK.times(1));
+			}
+			else {
+				line.append(BLANK.times(value.length() == 2 ? 2 : 3));
+			}
 			line.append(value);
+			previousValue = value;
 		}
 		return line.toString();
 	}

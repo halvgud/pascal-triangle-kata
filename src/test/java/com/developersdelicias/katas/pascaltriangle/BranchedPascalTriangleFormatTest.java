@@ -137,6 +137,30 @@ public class BranchedPascalTriangleFormatTest {
 		);
 	}
 
+	@Test
+	public void can_format_branches_with_two_and_three_digits() {
+		configureIteratorWithLevels(
+				new PascalTriangleLevel(
+						Collections.singletonList(new PascalTriangleNode(1))
+				),
+				new PascalTriangleLevel(
+						asList(
+								new PascalTriangleNode(84),
+								new PascalTriangleNode(126)
+						)
+				)
+		);
+
+		assertThat(
+				"Cannot format branches with two and three digits",
+				format.format(triangle),
+				is("  1\n" +
+						" / \\\n" +
+						"84  126"
+				)
+		);
+	}
+
 	private void configureIteratorWithLevels(PascalTriangleLevel... levels) {
 		triangle = Mockito.spy(new PascalTriangle(levels.length));
 		given(triangle.iterator()).willReturn(asList(levels).iterator());

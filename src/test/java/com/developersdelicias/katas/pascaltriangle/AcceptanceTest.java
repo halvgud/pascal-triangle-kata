@@ -52,7 +52,6 @@ public class AcceptanceTest {
 	}
 
 	@Test
-	@Ignore
 	public void triangle_of_11() {
 		format = new BranchedPascalTriangleFormat();
 		printPascalTriangleOfLevel(11);
