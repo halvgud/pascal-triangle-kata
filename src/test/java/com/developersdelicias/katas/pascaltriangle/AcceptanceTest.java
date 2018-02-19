@@ -1,6 +1,5 @@
 package com.developersdelicias.katas.pascaltriangle;
 
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;

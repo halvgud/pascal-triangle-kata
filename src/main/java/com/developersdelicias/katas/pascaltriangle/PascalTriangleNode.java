@@ -5,7 +5,7 @@ import java.util.Objects;
 public class PascalTriangleNode {
 	private final long value;
 
-	public PascalTriangleNode(final long value) {
+	PascalTriangleNode(final long value) {
 		this.value = value;
 	}
 
