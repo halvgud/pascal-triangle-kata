@@ -31,40 +31,46 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
 	private MultipleLineString createOutput(PascalTriangle triangle) {
 		Iterator<PascalTriangleLevel> triangleLevels = triangle.levels();
-		MultipleLineString outputs = new MultipleLineString();
+		MultipleLineString formattedTriangleString = new MultipleLineString();
 		while (triangleLevels.hasNext()) {
-			PascalTriangleLevel currentLevel = triangleLevels.next();
-			outputs.appendLine(createValueLine(currentLevel.nodes()));
+			formattedTriangleString.appendLine(createValueLine(triangleLevels.next().nodes()));
 
-			if (triangleLevel > 1 && actualLevelCount < triangleLevel) {
-				outputs.appendLine(nodeConnector(leftMargin--, additionalConnectors++));
+			if (shouldAppendNewLevel()) {
+				formattedTriangleString.appendLine(nodeConnector(leftMargin--, additionalConnectors++));
 			}
 			actualLevelCount++;
 		}
-		return outputs;
+		return formattedTriangleString;
+	}
+
+	private boolean shouldAppendNewLevel() {
+		return triangleLevel > 1 && actualLevelCount < triangleLevel;
 	}
 
 	private String nodeConnector(int leftMargin, int additionalConnectors) {
+		String connector = createConnectorSymbol();
+		resetAdditionalMargin();
+		return BLANK.times(leftMargin + additionalMargin)
+				+ new RepeatedString(connector + BLANK.times(1)).times(additionalConnectors)
+				+ connector;
+	}
 
+	private String createConnectorSymbol() {
 		String branchSymbol = "/ \\";
-
 		if (this.triangleLevel >= 14) {
 			branchSymbol = "/   \\";
 		}
+		return branchSymbol;
+	}
 
+	private void resetAdditionalMargin() {
 		if (additionalMargin < 0) {
 			additionalMargin = 0;
 		}
-
-		return BLANK.times(leftMargin + additionalMargin)
-				+ new RepeatedString(branchSymbol + BLANK.times(1)).times(additionalConnectors)
-				+ branchSymbol;
 	}
 
 	private String createValueLine(Iterator<PascalTriangleNode> iterator) {
-		if (additionalMargin < 0) {
-			additionalMargin = 0;
-		}
+		resetAdditionalMargin();
 		StringBuilder line = new StringBuilder(BLANK.times((leftMargin--) + (additionalMargin--)));
 
 		String previousValue = "";
