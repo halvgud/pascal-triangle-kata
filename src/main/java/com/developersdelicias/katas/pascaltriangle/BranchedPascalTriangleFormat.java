@@ -1,11 +1,6 @@
 package com.developersdelicias.katas.pascaltriangle;
 
 import java.util.Iterator;
-import java.util.List;
-import java.util.Spliterator;
-import java.util.Spliterators;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
@@ -15,30 +10,25 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
 	@Override
 	public String format(PascalTriangle triangle) {
-		if (triangle.level() >= 1) {
-			Iterator<PascalTriangleLevel> iterator = triangle.iterator();
-			MultipleLineString outputs = null;
-			int actualLevelCount = 1;
-			int leftMargin = (triangle.level() - 1) * 2;
-			int additionalConnectors = 0;
-			while (iterator.hasNext()) {
-				PascalTriangleLevel currentLevel = iterator.next();
-				String valueLine = createValueLine(leftMargin--, currentLevel.iterator());
-				if (outputs == null)
-					outputs = new MultipleLineString(valueLine);
-				else
-					outputs.appendLine(valueLine);
+		Iterator<PascalTriangleLevel> iterator = triangle.iterator();
+		MultipleLineString outputs = null;
+		int actualLevelCount = 1;
+		int leftMargin = (triangle.level() - 1) * 2;
+		int additionalConnectors = 0;
+		while (iterator.hasNext()) {
+			PascalTriangleLevel currentLevel = iterator.next();
+			String valueLine = createValueLine(leftMargin--, currentLevel.iterator());
+			if (outputs == null)
+				outputs = new MultipleLineString(valueLine);
+			else
+				outputs.appendLine(valueLine);
 
-				if (triangle.level() > 1 && actualLevelCount < triangle.level()) {
-					outputs.appendLine(nodeConnector(leftMargin--, additionalConnectors++));
-				}
-				actualLevelCount++;
+			if (triangle.level() > 1 && actualLevelCount < triangle.level()) {
+				outputs.appendLine(nodeConnector(leftMargin--, additionalConnectors++));
 			}
-
-			return outputs.toString();
+			actualLevelCount++;
 		}
-
-		return "1";
+		return outputs == null ? "" : outputs.toString();
 	}
 
 	private String nodeConnector(int leftMargin, int additionalConnectors) {
