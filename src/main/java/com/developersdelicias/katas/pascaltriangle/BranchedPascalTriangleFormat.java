@@ -74,7 +74,6 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 	}
 
 	private String createValueLine(Iterator<PascalTriangleNode> iterator) {
-		resetAdditionalMargin();
 		StringBuilder line = createMargin();
 		String previousValue = "";
 		if (iterator.hasNext()) {
