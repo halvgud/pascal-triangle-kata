@@ -10,6 +10,7 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 	private int actualLevelCount;
 	private int leftMargin;
 	private int additionalConnectors;
+	private String levelConnector = "/ \\";
 
 	@Override
 	public String format(PascalTriangle triangle) {
@@ -27,6 +28,10 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 		if (triangleLevel >= 17) {
 			additionalMargin += 3;
 		}
+
+		if (this.triangleLevel >= 14) {
+			levelConnector = "/   \\";
+		}
 	}
 
 	private MultipleLineString createOutput(PascalTriangle triangle) {
@@ -35,32 +40,31 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 		while (triangleLevels.hasNext()) {
 			formattedTriangleString.appendLine(createValueLine(triangleLevels.next().nodes()));
 
-			if (shouldAppendNewLevel()) {
-				formattedTriangleString.appendLine(nodeConnector(leftMargin--, additionalConnectors++));
+			if (shouldAppendConnector()) {
+				formattedTriangleString.appendLine(nodeConnector());
 			}
 			actualLevelCount++;
 		}
 		return formattedTriangleString;
 	}
 
-	private boolean shouldAppendNewLevel() {
+	private boolean shouldAppendConnector() {
 		return triangleLevel > 1 && actualLevelCount < triangleLevel;
 	}
 
-	private String nodeConnector(int leftMargin, int additionalConnectors) {
+	private String nodeConnector() {
 		resetAdditionalMargin();
-		String connector = createConnectorSymbol();
-		return BLANK.times(leftMargin + additionalMargin)
-				+ new RepeatedString(connector + BLANK.times(1)).times(additionalConnectors)
-				+ connector;
+		return BLANK.times(this.leftMargin-- + additionalMargin)
+				+ extraConnectors()
+				+ connector();
 	}
 
-	private String createConnectorSymbol() {
-		String branchSymbol = "/ \\";
-		if (this.triangleLevel >= 14) {
-			branchSymbol = "/   \\";
-		}
-		return branchSymbol;
+	private String extraConnectors() {
+		return new RepeatedString(connector() + BLANK.times(1)).times(this.additionalConnectors++);
+	}
+
+	private String connector() {
+		return levelConnector;
 	}
 
 	private void resetAdditionalMargin() {
