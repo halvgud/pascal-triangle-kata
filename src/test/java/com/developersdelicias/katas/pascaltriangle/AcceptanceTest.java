@@ -5,7 +5,7 @@ import org.mockito.Mockito;
 
 import static org.mockito.Mockito.verify;
 
-public class AcceptanceTests {
+public class AcceptanceTest {
 
 	private Console console = Mockito.mock(Console.class);
 	private PascalTriangleFormat format = new BranchedPascalTriangleFormat();
