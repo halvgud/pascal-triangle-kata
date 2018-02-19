@@ -49,7 +49,9 @@ public class BranchedPascalTriangleFormatTest {
 	@Test
 	public void can_format_triangles_of_level_one() {
 		triangle = Mockito.spy(new PascalTriangle(1));
-		given(triangle.iterator()).willReturn(asList(LEVEL_1).iterator());
+		given(triangle.iterator()).willReturn(asList(new PascalTriangleLevel(
+				Collections.singletonList(new PascalTriangleNode(1))
+		)).iterator());
 
 		assertThat(
 				"Cannot format triangles of level one",
@@ -61,7 +63,14 @@ public class BranchedPascalTriangleFormatTest {
 	@Test
 	public void can_format_triangles_of_level_two() {
 		triangle = Mockito.spy(new PascalTriangle(2));
-		given(triangle.iterator()).willReturn(asList(LEVEL_1, LEVEL_2).iterator());
+		given(triangle.iterator()).willReturn(asList(new PascalTriangleLevel(
+				Collections.singletonList(new PascalTriangleNode(1))
+		), new PascalTriangleLevel(
+				asList(
+						new PascalTriangleNode(1),
+						new PascalTriangleNode(1)
+				)
+		)).iterator());
 
 		assertThat(
 				"Cannot format triangles of level two",
@@ -76,7 +85,20 @@ public class BranchedPascalTriangleFormatTest {
 	@Test
 	public void can_format_triangles_of_level_three() {
 		triangle = Mockito.spy(new PascalTriangle(3));
-		given(triangle.iterator()).willReturn(asList(LEVEL_1, LEVEL_2, LEVEL_3).iterator());
+		given(triangle.iterator()).willReturn(asList(new PascalTriangleLevel(
+				Collections.singletonList(new PascalTriangleNode(1))
+		), new PascalTriangleLevel(
+				asList(
+						new PascalTriangleNode(1),
+						new PascalTriangleNode(1)
+				)
+		), new PascalTriangleLevel(
+				asList(
+						new PascalTriangleNode(1),
+						new PascalTriangleNode(2),
+						new PascalTriangleNode(1)
+				)
+		)).iterator());
 
 		assertThat(
 				"Cannot format triangles of level three",
@@ -93,7 +115,20 @@ public class BranchedPascalTriangleFormatTest {
 	@Test
 	public void can_format_triangles_of_level_four() {
 		triangle = Mockito.spy(new PascalTriangle(4));
-		given(triangle.iterator()).willReturn(asList(LEVEL_1, LEVEL_2, LEVEL_3, LEVEL_4).iterator());
+		given(triangle.iterator()).willReturn(asList(new PascalTriangleLevel(
+				Collections.singletonList(new PascalTriangleNode(1))
+		), new PascalTriangleLevel(
+				asList(
+						new PascalTriangleNode(1),
+						new PascalTriangleNode(1)
+				)
+		), new PascalTriangleLevel(
+				asList(
+						new PascalTriangleNode(1),
+						new PascalTriangleNode(2),
+						new PascalTriangleNode(1)
+				)
+		), LEVEL_4).iterator());
 
 		assertThat(
 				"Cannot format triangles of level four",
@@ -105,6 +140,35 @@ public class BranchedPascalTriangleFormatTest {
 						"  1   2   1\n" +
 						" / \\ / \\ / \\\n" +
 						"1   3   3   1"
+				)
+		);
+	}
+
+	@Test
+	public void can_format_triangles_with_two_digits() {
+		triangle = Mockito.spy(new PascalTriangle(3));
+		given(triangle.iterator()).willReturn(asList(new PascalTriangleLevel(
+				Collections.singletonList(new PascalTriangleNode(5))
+		), new PascalTriangleLevel(
+				asList(
+						new PascalTriangleNode(5),
+						new PascalTriangleNode(5)
+				)
+		), new PascalTriangleLevel(
+				asList(
+						new PascalTriangleNode(5),
+						new PascalTriangleNode(10),
+						new PascalTriangleNode(5)
+				)
+		)).iterator());
+		assertThat(
+				"Cannot format triangles of level four",
+				format.format(triangle),
+				is("    5\n" +
+						"   / \\\n" +
+						"  5   5\n" +
+						" / \\ / \\\n" +
+						"5  10   5"
 				)
 		);
 	}

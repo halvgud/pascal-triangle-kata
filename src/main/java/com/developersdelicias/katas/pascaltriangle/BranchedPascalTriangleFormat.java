@@ -1,6 +1,11 @@
 package com.developersdelicias.katas.pascaltriangle;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
@@ -42,10 +47,14 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
 	private String createValueLine(int leftMargin, Iterator<PascalTriangleNode> iterator) {
 		StringBuilder line = new StringBuilder(BLANK.times(leftMargin));
-		while (iterator.hasNext()) {
+
+		if (iterator.hasNext()) {
 			line.append(iterator.next().value());
-			if (iterator.hasNext())
-				line.append(BLANK.times(3));
+		}
+		while (iterator.hasNext()) {
+			String value = iterator.next().value();
+			line.append(BLANK.times(value.length() == 2 ? 2 : 3));
+			line.append(value);
 		}
 		return line.toString();
 	}
