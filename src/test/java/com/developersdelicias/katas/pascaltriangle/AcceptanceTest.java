@@ -1,14 +1,32 @@
 package com.developersdelicias.katas.pascaltriangle;
 
+import org.hamcrest.core.Is;
+import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import org.mockito.Mockito;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class AcceptanceTest {
 
-	private Console console = Mockito.mock(Console.class);
+	private Output output;
 	private PascalTriangleFormat format;
+
+	@Before
+	public void setUp() {
+		output = mock(Console.class);
+	}
 
 	@Test
 	public void can_print_pascal_triangle_of_level_one_in_console() {
@@ -16,7 +34,7 @@ public class AcceptanceTest {
 
 		printPascalTriangleOfLevel(1);
 
-		verify(console).print("1");
+		verify(output).print("1");
 	}
 
 	@Test
@@ -25,7 +43,7 @@ public class AcceptanceTest {
 
 		printPascalTriangleOfLevel(2);
 
-		verify(console).print(
+		verify(output).print(
 				"  1\n" +
 						" / \\\n" +
 						"1   1"
@@ -38,7 +56,7 @@ public class AcceptanceTest {
 
 		printPascalTriangleOfLevel(6);
 
-		verify(console).print(
+		verify(output).print(
 				"          1\n" +
 						"         / \\\n" +
 						"        1   1\n" +
@@ -58,7 +76,7 @@ public class AcceptanceTest {
 
 		printPascalTriangleOfLevel(11);
 
-		verify(console).print(
+		verify(output).print(
 				"                    1\n" +
 						"                   / \\\n" +
 						"                  1   1\n" +
@@ -89,7 +107,7 @@ public class AcceptanceTest {
 
 		printPascalTriangleOfLevel(14);
 
-		verify(console).print(
+		verify(output).print(
 				"                                       1\n" +
 						"                                     /   \\\n" +
 						"                                    1     1\n" +
@@ -126,7 +144,7 @@ public class AcceptanceTest {
 
 		printPascalTriangleOfLevel(17);
 
-		verify(console).print(
+		verify(output).print(
 				"                                                1\n" +
 						"                                              /   \\\n" +
 						"                                             1     1\n" +
@@ -169,7 +187,7 @@ public class AcceptanceTest {
 
 		printPascalTriangleOfLevel(5);
 
-		verify(console)
+		verify(output)
 				.print("1\n" +
 						"1 1\n" +
 						"1 2 1\n" +
@@ -178,7 +196,31 @@ public class AcceptanceTest {
 				);
 	}
 
+	@Rule
+	public TemporaryFolder temporaryFolder = new TemporaryFolder();
+	@Test
+	public void can_be_stored_in_a_file() throws IOException {
+		String fileToCreate = "src/test/triangle.text";
+		format = new SinglePascalTriangleFormat();
+		output = new ToFile(fileToCreate);
+
+		printPascalTriangleOfLevel(5);
+
+		File file = new File(fileToCreate);
+		assertTrue(file.exists());
+		assertThat(textOf(file), is("1\n" +
+				"1 1\n" +
+				"1 2 1\n" +
+				"1 3 3 1\n" +
+				"1 4 6 4 1"));
+		assertTrue(file.delete());
+	}
+
+	private String textOf(File file) throws IOException {
+		return new String(Files.readAllBytes(file.toPath()), Charset.defaultCharset());
+	}
+
 	private void printPascalTriangleOfLevel(final int level) {
-		new PascalTriangle(level).print(console, format);
+		new PascalTriangle(level).print(output, format);
 	}
 }

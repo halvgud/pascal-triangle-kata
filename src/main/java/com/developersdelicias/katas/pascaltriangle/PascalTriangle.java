@@ -46,7 +46,7 @@ class PascalTriangle {
 		return array[index];
 	}
 
-	public final void print(Console console, PascalTriangleFormat format) {
+	public final void print(Output console, PascalTriangleFormat format) {
 		console.print(format.format(this));
 	}
 
