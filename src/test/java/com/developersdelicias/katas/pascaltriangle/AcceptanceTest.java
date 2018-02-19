@@ -1,6 +1,5 @@
 package com.developersdelicias.katas.pascaltriangle;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
 
@@ -11,10 +10,10 @@ public class AcceptanceTest {
 	private Console console = Mockito.mock(Console.class);
 	private PascalTriangleFormat format;
 
-
 	@Test
 	public void can_print_pascal_triangle_of_level_one_in_console() {
 		format = new BranchedPascalTriangleFormat();
+
 		printPascalTriangleOfLevel(1);
 
 		verify(console).print("1");
@@ -23,6 +22,7 @@ public class AcceptanceTest {
 	@Test
 	public void can_print_pascal_triangle_of_level_two_in_console() {
 		format = new BranchedPascalTriangleFormat();
+
 		printPascalTriangleOfLevel(2);
 
 		verify(console).print(
@@ -35,6 +35,7 @@ public class AcceptanceTest {
 	@Test
 	public void can_print_pascal_triangle_of_level_six_in_console() {
 		format = new BranchedPascalTriangleFormat();
+
 		printPascalTriangleOfLevel(6);
 
 		verify(console).print(
@@ -54,7 +55,9 @@ public class AcceptanceTest {
 	@Test
 	public void triangle_of_11() {
 		format = new BranchedPascalTriangleFormat();
+
 		printPascalTriangleOfLevel(11);
+
 		verify(console).print(
 				"                    1\n" +
 						"                   / \\\n" +
@@ -81,10 +84,11 @@ public class AcceptanceTest {
 	}
 
 	@Test
-//	@Ignore
 	public void triangle_of_14() {
 		format = new BranchedPascalTriangleFormat();
+
 		printPascalTriangleOfLevel(14);
+
 		verify(console).print(
 				"                                       1\n" +
 						"                                     /   \\\n" +
@@ -117,26 +121,27 @@ public class AcceptanceTest {
 	}
 
 	@Test
-	@Ignore
 	public void triangle_of_17() {
 		format = new BranchedPascalTriangleFormat();
+
 		printPascalTriangleOfLevel(17);
+
 		verify(console).print(
-				"                                                1                                          \n" +
+				"                                                1\n" +
 						"                                              /   \\\n" +
 						"                                             1     1\n" +
 						"                                           /   \\ /   \\\n" +
 						"                                          1     2     1\n" +
 						"                                        /   \\ /   \\ /   \\\n" +
-						"                                       1     3     3     1 \n" +
+						"                                       1     3     3     1\n" +
 						"                                     /   \\ /   \\ /   \\ /   \\\n" +
-						"                                    1     4     6     4     1 \n" +
+						"                                    1     4     6     4     1\n" +
 						"                                  /   \\ /   \\ /   \\ /   \\ /   \\\n" +
-						"                                 1     5    10    10     5     1 \n" +
+						"                                 1     5    10    10     5     1\n" +
 						"                               /   \\ /   \\ /   \\ /   \\ /   \\ /   \\\n" +
-						"                              1     6    15    20    15     6     1 \n" +
+						"                              1     6    15    20    15     6     1\n" +
 						"                            /   \\ /   \\ /   \\ /   \\ /   \\ /   \\ /   \\\n" +
-						"                           1     7    21    35    35    21     7     1 \n" +
+						"                           1     7    21    35    35    21     7     1\n" +
 						"                         /   \\ /   \\ /   \\ /   \\ /   \\ /   \\ /   \\ /   \\\n" +
 						"                        1     8    28    56    70    56    28     8     1\n" +
 						"                      /   \\ /   \\ /   \\ /   \\ /   \\ /   \\ /   \\ /   \\ /   \\\n" +
@@ -164,11 +169,13 @@ public class AcceptanceTest {
 
 		printPascalTriangleOfLevel(5);
 
-		verify(console).print("1\n" +
-				"1 1\n" +
-				"1 2 1\n" +
-				"1 3 3 1\n" +
-				"1 4 6 4 1");
+		verify(console)
+				.print("1\n" +
+						"1 1\n" +
+						"1 2 1\n" +
+						"1 3 3 1\n" +
+						"1 4 6 4 1"
+				);
 	}
 
 	private void printPascalTriangleOfLevel(final int level) {

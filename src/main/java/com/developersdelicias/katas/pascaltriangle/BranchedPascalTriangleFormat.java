@@ -18,6 +18,11 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 		int actualLevelCount = 1;
 		int leftMargin = (triangle.level() - 1) * 2;
 		additionalMargin = triangleLevel >= 14 ? 13 : 0;
+
+		if (triangleLevel >= 17) {
+			additionalMargin += 3;
+		}
+
 		int additionalConnectors = 0;
 		while (iterator.hasNext()) {
 			PascalTriangleLevel currentLevel = iterator.next();
@@ -84,6 +89,12 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 				} else if (previousValue.length() == 4 && value.length() == 3) {
 					line.append(BLANK.times(3));
 				} else if (previousValue.length() == 4 && value.length() == 4) {
+					line.append(BLANK.times(2));
+				} else if (previousValue.length() == 4 && value.length() == 5) {
+					line.append(BLANK.times(1));
+				} else if (previousValue.length() == 5 && value.length() == 5) {
+					line.append(BLANK.times(1));
+				} else if (previousValue.length() == 5 && value.length() == 4) {
 					line.append(BLANK.times(2));
 				} else {
 					line.append(BLANK.times(5));

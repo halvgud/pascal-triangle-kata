@@ -3,7 +3,7 @@ package com.developersdelicias.katas.pascaltriangle;
 public class PascalTriangleDemo {
 
 	public static void main(String[] args) {
-		PascalTriangle triangle = new PascalTriangle(11);
+		PascalTriangle triangle = new PascalTriangle(20);
 		PascalTriangleFormat branchedFormat = new BranchedPascalTriangleFormat();
 		PascalTriangleFormat singleFormat = new SinglePascalTriangleFormat();
 		Console console = new Console();
