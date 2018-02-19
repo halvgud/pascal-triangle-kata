@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.mockito.InOrder;
 import org.mockito.Mockito;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import static java.util.Arrays.asList;
@@ -15,57 +14,51 @@ import static org.mockito.Mockito.inOrder;
 
 public class PascalTriangleTest {
 
-	private static final PascalTriangleLevel LEVEL_1 = aLevelWith(
-			nodes(
+	private static final PascalTriangleLevel LEVEL_1 =
+			aLevelWithNodes(
 					nodeWithValue(1)
-			)
-	);
-	private static final PascalTriangleLevel LEVEL_2 = aLevelWith(
-			nodes(
+			);
+	private static final PascalTriangleLevel LEVEL_2 =
+			aLevelWithNodes(
 					nodeWithValue(1),
 					nodeWithValue(1)
-			)
-	);
-	private static final PascalTriangleLevel LEVEL_3 = aLevelWith(
-			nodes(
+			);
+	private static final PascalTriangleLevel LEVEL_3 =
+			aLevelWithNodes(
 					nodeWithValue(1),
 					nodeWithValue(2),
 					nodeWithValue(1)
-			)
-	);
+			);
 
-	private static final PascalTriangleLevel LEVEL_4 = aLevelWith(
-			nodes(
+	private static final PascalTriangleLevel LEVEL_4 =
+			aLevelWithNodes(
 					nodeWithValue(1),
 					nodeWithValue(3),
 					nodeWithValue(3),
 					nodeWithValue(1)
-			)
-	);
+			);
 
-	private static final PascalTriangleLevel LEVEL_5 = aLevelWith(
-			nodes(
+	private static final PascalTriangleLevel LEVEL_5 =
+			aLevelWithNodes(
 					nodeWithValue(1),
 					nodeWithValue(4),
 					nodeWithValue(6),
 					nodeWithValue(4),
 					nodeWithValue(1)
-			)
-	);
+			);
 
-	private static final PascalTriangleLevel LEVEL_6 = aLevelWith(
-			nodes(
+	private static final PascalTriangleLevel LEVEL_6 =
+			aLevelWithNodes(
 					nodeWithValue(1),
 					nodeWithValue(5),
 					nodeWithValue(10),
 					nodeWithValue(10),
 					nodeWithValue(5),
 					nodeWithValue(1)
-			)
-	);
+			);
 
-	private static final PascalTriangleLevel LEVEL_7 = aLevelWith(
-			nodes(
+	private static final PascalTriangleLevel LEVEL_7 =
+			aLevelWithNodes(
 					nodeWithValue(1),
 					nodeWithValue(6),
 					nodeWithValue(15),
@@ -73,21 +66,21 @@ public class PascalTriangleTest {
 					nodeWithValue(15),
 					nodeWithValue(6),
 					nodeWithValue(1)
-			)
-	);
+			);
 
 	@Test
 	public void can_print_in_a_console_with_given_format() {
 		Console console = Mockito.mock(Console.class);
 		PascalTriangleFormat format = Mockito.mock(PascalTriangleFormat.class);
 		PascalTriangle triangle = new PascalTriangle(1);
-		given(format.format(triangle)).willReturn("Formatted Triangle");
+		String formattedOutput = "Formatted Triangle";
+		given(format.format(triangle)).willReturn(formattedOutput);
 
 		triangle.print(console, format);
 
 		InOrder inorder = inOrder(format, console);
 		inorder.verify(format).format(triangle);
-		inorder.verify(console).print("Formatted Triangle");
+		inorder.verify(console).print(formattedOutput);
 	}
 
 	@Test
@@ -100,16 +93,16 @@ public class PascalTriangleTest {
 
 	@Test
 	public void can_iterate_triangles_of_level_one() {
-		Iterator<PascalTriangleLevel> levelIterator = iteratorOf(1);
+		Iterator<PascalTriangleLevel> levels = triangleWithLevel(1);
 
-		assertThat(levelIterator.hasNext(), is(true));
-		assertThat(levelIterator.next(), is(LEVEL_1));
-		assertThat(levelIterator.hasNext(), is(false));
+		assertThat(levels.hasNext(), is(true));
+		assertThat(levels.next(), is(LEVEL_1));
+		assertThat(levels.hasNext(), is(false));
 	}
 
 	@Test
 	public void can_iterate_triangles_of_level_two() {
-		Iterator<PascalTriangleLevel> levelIterator = iteratorOf(2);
+		Iterator<PascalTriangleLevel> levelIterator = triangleWithLevel(2);
 
 		assertThat(levelIterator.hasNext(), is(true));
 		assertThat(levelIterator.next(), is(LEVEL_1));
@@ -119,7 +112,7 @@ public class PascalTriangleTest {
 
 	@Test
 	public void can_iterate_triangles_of_level_three() {
-		Iterator<PascalTriangleLevel> levelIterator = iteratorOf(3);
+		Iterator<PascalTriangleLevel> levelIterator = triangleWithLevel(3);
 
 		assertThat(levelIterator.hasNext(), is(true));
 		assertThat(levelIterator.next(), is(LEVEL_1));
@@ -130,7 +123,7 @@ public class PascalTriangleTest {
 
 	@Test
 	public void can_iterate_triangles_of_level_six() {
-		Iterator<PascalTriangleLevel> levelIterator = iteratorOf(6);
+		Iterator<PascalTriangleLevel> levelIterator = triangleWithLevel(6);
 
 		assertThat(levelIterator.hasNext(), is(true));
 		assertThat(levelIterator.next(), is(LEVEL_1));
@@ -144,7 +137,7 @@ public class PascalTriangleTest {
 
 	@Test
 	public void can_iterate_triangles_of_level_seven() {
-		Iterator<PascalTriangleLevel> levelIterator = iteratorOf(7);
+		Iterator<PascalTriangleLevel> levelIterator = triangleWithLevel(7);
 
 		assertThat(levelIterator.hasNext(), is(true));
 		assertThat(levelIterator.next(), is(LEVEL_1));
@@ -157,16 +150,12 @@ public class PascalTriangleTest {
 		assertThat(levelIterator.hasNext(), is(false));
 	}
 
-	private Iterator<PascalTriangleLevel> iteratorOf(int level) {
+	private Iterator<PascalTriangleLevel> triangleWithLevel(int level) {
 		return new PascalTriangle(level).levels();
 	}
 
-	private static PascalTriangleLevel aLevelWith(Collection<PascalTriangleNode> nodes) {
-		return new PascalTriangleLevel(nodes);
-	}
-
-	private static Collection<PascalTriangleNode> nodes(PascalTriangleNode... nodes) {
-		return asList(nodes);
+	private static PascalTriangleLevel aLevelWithNodes(PascalTriangleNode... nodes) {
+		return new PascalTriangleLevel(asList(nodes));
 	}
 
 	private static PascalTriangleNode nodeWithValue(long value) {
