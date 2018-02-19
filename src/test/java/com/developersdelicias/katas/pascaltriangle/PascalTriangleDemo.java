@@ -3,14 +3,16 @@ package com.developersdelicias.katas.pascaltriangle;
 public class PascalTriangleDemo {
 
 	public static void main(String[] args) {
-		PascalTriangle triangle = new PascalTriangle(20);
-		PascalTriangleFormat branchedFormat = new BranchedPascalTriangleFormat();
-		PascalTriangleFormat singleFormat = new SinglePascalTriangleFormat();
-		Console console = new Console();
+		for (int level = 1; level <= 30; level++) {
+			createFileForTriangleOfLevel(level);
+		}
+	}
 
-		console.print("Branched Format");
-		triangle.print(console, branchedFormat);
-		console.print("Single Format");
-		triangle.print(console, singleFormat);
+	private static void createFileForTriangleOfLevel(int level) {
+		PascalTriangle triangle = new PascalTriangle(level);
+		PascalTriangleFormat branchedFormat = new BranchedPascalTriangleFormat();
+		Output file = new ToFile("C://tmp/triangles/triangle_level_" + level + ".txt");
+
+		triangle.print(file, branchedFormat);
 	}
 }
