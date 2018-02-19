@@ -1,11 +1,9 @@
 package com.developersdelicias.katas.pascaltriangle;
 
-import org.hamcrest.core.Is;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import org.mockito.Mockito;
 
 import java.io.File;
 import java.io.IOException;
