@@ -31,7 +31,7 @@ Pascal Triangle of level 6 is:
 1   5  10  10   5   1
 ```
 
-Pascal Triangle of level 10 is:
+Pascal Triangle of level 11 is:
 ```
                     1
                    / \
@@ -56,7 +56,7 @@ Pascal Triangle of level 10 is:
 1  10  45  120 210 252 210 120 45  10   1
 ```
    
-Pascal Triangle of level 13 is:
+Pascal Triangle of level 14 is:
 ```
                                        1
                                      /   \
@@ -88,7 +88,7 @@ Pascal Triangle of level 13 is:
 ```
 
 
-Pascal Triangle of level 16 is:
+Pascal Triangle of level 17 is:
 ```
                                                 1
                                               /   \
