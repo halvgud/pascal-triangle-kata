@@ -90,7 +90,7 @@ Pascal Triangle of level 13 is:
 
 Pascal Triangle of level 16 is:
 ```
-                                                1                                          
+                                                1
                                               /   \
                                              1     1
                                            /   \ /   \
