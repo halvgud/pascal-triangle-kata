@@ -95,43 +95,35 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 
 	private int between(String previousValue, String value) {
 		int spacesBetweenValues;
+		int first = previousValue.length();
+		int second = value.length();
 		if (triangleLevel >= 14) {
-			if (previousValue.length() == 1 && value.length() == 1) {
+			if (first == 1 && second == 1) {
 				spacesBetweenValues = 5;
-			} else if (previousValue.length() == 1 && value.length() == 2) {
+			} else if (first == 1 && second == 2) {
 				spacesBetweenValues = 4;
-			} else if (previousValue.length() == 2 && value.length() == 2) {
+			} else if (first == 2 && (second == 2 || second == 3)) {
 				spacesBetweenValues = 4;
-			} else if (previousValue.length() == 2 && value.length() == 3) {
-				spacesBetweenValues = 4;
-			} else if (previousValue.length() == 3 && value.length() == 3) {
+			} else if (first == 3 && (second == 3 || second == 2)) {
 				spacesBetweenValues = 3;
-			} else if (previousValue.length() == 3 && value.length() == 2) {
+			} else if (first == 4 && second == 3) {
 				spacesBetweenValues = 3;
-			} else if (previousValue.length() == 3 && value.length() == 4) {
+			} else if (first == 3 && second == 4) {
 				spacesBetweenValues = 2;
-			} else if (previousValue.length() == 4 && value.length() == 3) {
-				spacesBetweenValues = 3;
-			} else if (previousValue.length() == 4 && value.length() == 4) {
+			} else if (first == 4 && (second == 4 || second == 5)) {
 				spacesBetweenValues = 2;
-			} else if (previousValue.length() == 4 && value.length() == 5) {
-				spacesBetweenValues = 2;
-			} else if (previousValue.length() == 5 && value.length() == 5) {
-				spacesBetweenValues = 1;
-			} else if (previousValue.length() == 5 && value.length() == 4) {
+			} else if (first == 5 && (second == 5 || second == 4)) {
 				spacesBetweenValues = 1;
 			} else {
 				spacesBetweenValues = 5;
 			}
 		} else {
-			if (previousValue.length() == 2 && value.length() == 3) {
+			if (first == 2 && second == 3) {
 				spacesBetweenValues = 2;
-			} else if (previousValue.length() == 3 && value.length() == 3) {
-				spacesBetweenValues = 1;
-			} else if (previousValue.length() == 3 && value.length() == 2) {
+			} else if (first == 3 && (second == 3 || second == 2)) {
 				spacesBetweenValues = 1;
 			} else {
-				spacesBetweenValues = value.length() == 2 ? 2 : 3;
+				spacesBetweenValues = second == 2 ? 2 : 3;
 			}
 		}
 		return spacesBetweenValues;
