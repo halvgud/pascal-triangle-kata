@@ -103,11 +103,11 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 			} else if (previousValue.length() == 2 && value.length() == 2) {
 				spacesBetweenValues = 4;
 			} else if (previousValue.length() == 2 && value.length() == 3) {
-				spacesBetweenValues = 3;
+				spacesBetweenValues = 4;
 			} else if (previousValue.length() == 3 && value.length() == 3) {
 				spacesBetweenValues = 3;
 			} else if (previousValue.length() == 3 && value.length() == 2) {
-				spacesBetweenValues = 4;
+				spacesBetweenValues = 3;
 			} else if (previousValue.length() == 3 && value.length() == 4) {
 				spacesBetweenValues = 2;
 			} else if (previousValue.length() == 4 && value.length() == 3) {
@@ -115,11 +115,11 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 			} else if (previousValue.length() == 4 && value.length() == 4) {
 				spacesBetweenValues = 2;
 			} else if (previousValue.length() == 4 && value.length() == 5) {
-				spacesBetweenValues = 1;
+				spacesBetweenValues = 2;
 			} else if (previousValue.length() == 5 && value.length() == 5) {
 				spacesBetweenValues = 1;
 			} else if (previousValue.length() == 5 && value.length() == 4) {
-				spacesBetweenValues = 2;
+				spacesBetweenValues = 1;
 			} else {
 				spacesBetweenValues = 5;
 			}
