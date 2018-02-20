@@ -94,39 +94,44 @@ class BranchedPascalTriangleFormat implements PascalTriangleFormat {
 	}
 
 	private int between(String previousValue, String value) {
-		int spacesBetweenValues;
 		int first = previousValue.length();
 		int second = value.length();
 		if (triangleLevel >= 14) {
-			if (first == 1 && second == 1) {
-				spacesBetweenValues = 5;
-			} else if (first == 1 && second == 2) {
-				spacesBetweenValues = 4;
-			} else if (first == 2 && (second == 2 || second == 3)) {
-				spacesBetweenValues = 4;
-			} else if (first == 3 && (second == 3 || second == 2)) {
-				spacesBetweenValues = 3;
-			} else if (first == 4 && second == 3) {
-				spacesBetweenValues = 3;
-			} else if (first == 3 && second == 4) {
-				spacesBetweenValues = 2;
-			} else if (first == 4 && (second == 4 || second == 5)) {
-				spacesBetweenValues = 2;
-			} else if (first == 5 && (second == 5 || second == 4)) {
-				spacesBetweenValues = 1;
-			} else {
-				spacesBetweenValues = 5;
-			}
-		} else {
-			if (first == 2 && second == 3) {
-				spacesBetweenValues = 2;
-			} else if (first == 3 && (second == 3 || second == 2)) {
-				spacesBetweenValues = 1;
-			} else {
-				spacesBetweenValues = second == 2 ? 2 : 3;
-			}
+			return upTo14Level(first, second);
 		}
-		return spacesBetweenValues;
+		return lessThan14(first, second);
+	}
+
+	private int lessThan14(int first, int second) {
+		if (first == 2 && second == 3) {
+			return 2;
+		} else if (first == 3 && (second == 3 || second == 2)) {
+			return 1;
+		} else {
+			return second == 2 ? 2 : 3;
+		}
+	}
+
+	private int upTo14Level(int first, int second) {
+		if (first == 1 && second == 1) {
+			return 5;
+		} else if (first == 1 && second == 2) {
+			return 4;
+		} else if (first == 2 && (second == 2 || second == 3)) {
+			return 4;
+		} else if (first == 3 && (second == 3 || second == 2)) {
+			return 3;
+		} else if (first == 4 && second == 3) {
+			return 3;
+		} else if (first == 3 && second == 4) {
+			return 2;
+		} else if (first == 4 && (second == 4 || second == 5)) {
+			return 2;
+		} else if (first == 5 && (second == 5 || second == 4)) {
+			return 1;
+		} else {
+			return 5;
+		}
 	}
 
 	private StringBuilder createMargin() {
